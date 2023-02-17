@@ -22,10 +22,12 @@ function HmacKeyGenParams(props: AlgorithmConfigComponentProps): JSX.Element {
 
   const hashChange = (event: Event) => {
     state.hash = event.target?.value;
+    console.log(state)
     setState(state);
   };
   const lengthChange = (event: Event) => {
     state.length = event.target?.value;
+    console.log(state)
     setState(state);
   };
 
@@ -65,6 +67,8 @@ type AlgorithmConfig = {
 function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
   // Manage the state here.
   const [configState, setConfigState] = useState({});
+
+  console.log(configState)
 
   const component = config[props.algorithm]({
     state: configState,
