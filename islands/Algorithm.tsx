@@ -17,18 +17,13 @@ type AlgorithmConfigComponentProps = {
   setState: StateUpdater<{}>;
 };
 
-function HmacKeyGenParams(props: AlgorithmConfigComponentProps): JSX.Element {
-  const { state, setState } = props;
+function HmacKeyGenParams({state, setState}: AlgorithmConfigComponentProps): JSX.Element {
 
   const hashChange = (event: Event) => {
-    state.hash = event.target?.value;
-    console.log(state)
-    setState(state);
+    setState({...state, hash: event.target?.value});
   };
   const lengthChange = (event: Event) => {
-    state.length = event.target?.value;
-    console.log(state)
-    setState(state);
+    setState({...state, length: event.target?.value});
   };
 
   return (
@@ -64,11 +59,18 @@ type AlgorithmConfig = {
   [k: string]: (props: AlgorithmConfigComponentProps) => JSX.Element;
 };
 
+function Debug(obj) {
+  console.log("debug", obj, Object.entries(obj).map(([k,v]) => <div>a</div>))
+  return <div>
+    {Object.entries(obj.config).map(([k,v]) => <div>a</div>)}
+  </div>
+}
+
 function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
   // Manage the state here.
   const [configState, setConfigState] = useState({});
 
-  console.log(configState)
+  console.log("render config", configState)
 
   const component = config[props.algorithm]({
     state: configState,
@@ -77,8 +79,9 @@ function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
 
   return (
     <div>
+      <h1>Config</h1>
       {component}
-      <div>{configState}</div>
+      <div><Debug config={configState} /></div>
     </div>
   );
 }
