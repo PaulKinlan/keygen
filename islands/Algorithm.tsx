@@ -66,10 +66,17 @@ function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
   // Manage the state here.
   const [configState, setConfigState] = useState({});
 
-  return config[props.algorithm]({
+  const component = config[props.algorithm]({
     state: configState,
     setState: setConfigState,
   });
+
+  return (
+    <div>
+      {component}
+      <div>{configState}</div>
+    </div>
+  );
 }
 
 const config: AlgorithmConfig = {
