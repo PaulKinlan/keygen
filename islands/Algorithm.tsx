@@ -148,8 +148,16 @@ function RsaHashedKeyGenParams({ name, state, setState }): JSX.Element {
     const buffer = new ArrayBuffer(4);
     const _32bit = new Uint32Array(buffer);
     _32bit[0] = event.target?.valueAsNumber;
-    setState({ ...state, exponent: new Uint8Array(buffer).slice(0,3) });
+    setState({ ...state, publicExponent: new Uint8Array(buffer).slice(0,3) });
   };
+
+  const buffer = new ArrayBuffer(4);
+  const _8bit = new Uint8Array(buffer);
+  const _32bit = new Uint32Array(buffer);
+
+  _8bit.set(state.publicExponent,0);
+
+  const publicExponentAsNumber = _32bit[0];
 
   return (
     <fieldset>
@@ -158,13 +166,13 @@ function RsaHashedKeyGenParams({ name, state, setState }): JSX.Element {
         Name
         <input name="name" type="text" value={name} disabled required />
       </label>
-      <label for="exponent">
+      <label for="publicExponent">
         Exponent:
         <input
-          name="exponent"
+          name="publicExponent"
           onInput={exponentChange}
           type="number"
-          value={state.exponent}
+          value={publicExponentAsNumber}
         />
       </label>
       <label for="modulusLength">
@@ -192,7 +200,8 @@ function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
 
   if (configState.name !== props.algorithm) {
     // Update the state if the algorithm changes.
-    setConfigState({...defaultConfig[props.algorithm]})
+    setConfigState({...defaultConfig[props.algorithm]});
+    return
   }
   const configComponent = configControl[props.algorithm]({
     name: props.algorithm,
@@ -210,9 +219,9 @@ function AlgortihmConfig(props: AlgorithmComponentProps): JSX.Element {
 }
 
 function Debug(obj) {
-  console.log("debug", obj, Object.entries(obj).map(([k,v]) => <div>a</div>))
+  console.log("Debug", obj)
   return <div>
-    {Object.entries(obj.config).map(([k,v]) => <div>a</div>)}
+    {Object.entries(obj.config).map(([k,v]) => <div>{k}: {JSON.stringify(v)}</div>)}
   </div>
 }
 
