@@ -8,7 +8,7 @@ export default function Home() {
         <title>Key Gen</title>
       </Head>
       <div class="p-4 mx-auto max-w-screen-md">
-        <Algorithm algorithm="ECDH" />
+        <Algorithm algorithm="HMAC" />
       </div>
     </>
   );
