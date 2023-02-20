@@ -1,5 +1,7 @@
 import { JSX } from "preact";
 
+import { Label } from "../components/general/Label.tsx";
+
 export function RsaHashedKeyGenParams({ state, setState }): JSX.Element {
   const modulusLengthChange = (event: Event) => {
     setState({
@@ -32,27 +34,18 @@ export function RsaHashedKeyGenParams({ state, setState }): JSX.Element {
 
   return (
     <fieldset>
-      <legend>{state.config.name} configuration</legend>
-      <label for="name">
-        Name
-        <input
-          name="name"
-          type="text"
-          value={state.config.name}
-          disabled
-          required />
-      </label>
-      <label for="publicExponent">
+      <Label for="publicExponent">
         Exponent:
         <input
           name="publicExponent"
           onInput={exponentChange}
           type="number"
           value={publicExponentAsNumber} />
-      </label>
-      <label for="modulusLength">
+      </Label>
+      <Label for="modulusLength">
         Modulous Length:
         <select
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           name="modulusLength"
           onInput={modulusLengthChange}
           value={state.config.modulusLength}
@@ -60,15 +53,17 @@ export function RsaHashedKeyGenParams({ state, setState }): JSX.Element {
           <option value="2048">2048</option>
           <option value="4096">4096</option>
         </select>
-      </label>
-      <label for="hash">
+      </Label>
+      <Label for="hash">
         Hash method
-        <select name="hash" onInput={hashChange} value={state.config.hash}>
+        <select 
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          name="hash" onInput={hashChange} value={state.config.hash}>
           <option value="SHA-256">SHA-256</option>
           <option value="SHA-384">SHA-384</option>
           <option value="SHA-521">SHA-521</option>
         </select>
-      </label>
+      </Label>
     </fieldset>
   );
 }

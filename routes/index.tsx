@@ -1,6 +1,6 @@
 import { Head } from "$fresh/runtime.ts";
 import Header from "../components/Header.tsx";
-import Hero from "../components/Hero.tsx";
+import { Heading1 } from "../ui/components/general/Headings.tsx";
 import Algorithm from "../islands/Algorithm.tsx";
 
 export default function Home() {
@@ -10,8 +10,8 @@ export default function Home() {
         <title>Key Gen</title>
       </Head>
       <Header></Header>
-      <div class="grid h-screen w-screen place-content-center">
-        <Hero></Hero>
+      <div class="grid w-screen place-content-center">
+        <Heading1>Key Gen</Heading1>
         <Algorithm algorithm="HMAC" />
       </div>
     </>

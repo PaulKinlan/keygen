@@ -1,9 +1,11 @@
 import { JSX } from "preact";
 import { AlgorithmConfigComponentProps } from "../../types/AlgorithmConfigComponentProps.ts";
 
+import { Label } from "../components/general/Label.tsx";
+import { Input } from "../components/general/Input.tsx";
 
 export function HmacKeyGenParams(
-  { name, state, setState }: AlgorithmConfigComponentProps): JSX.Element {
+  { state, setState }: AlgorithmConfigComponentProps): JSX.Element {
   const hashChange = (event: Event) => {
     setState({
       ...state,
@@ -19,33 +21,23 @@ export function HmacKeyGenParams(
 
   return (
     <fieldset>
-      <legend>{state.config.name} configuration</legend>
-      <label for="name">
-        Name:
-        <input
-          name="name"
-          type="text"
-          value={state.config.name}
-          disabled
-          required />
-      </label>
-      <label for="hash">
+      <Label for="hash">
         Hash method:
-        <select name="hash" onInput={hashChange} value={state.config.hash}>
+        <select class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="hash" onInput={hashChange} value={state.config.hash}>
           <option value="SHA-1">SHA-1</option>
           <option value="SHA-256">SHA-256</option>
           <option value="SHA-384">SHA-384</option>
           <option value="SHA-512">SHA-512</option>
         </select>
-      </label>
-      <label for="length">
+      </Label>
+      <Label for="length">
         Length (optional):
-        <input
+        <Input
           name="length"
           type="number"
           onInput={lengthChange}
           value={state.length} />
-      </label>
+      </Label>
     </fieldset>
   );
 }

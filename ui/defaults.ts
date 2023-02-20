@@ -65,7 +65,7 @@ export const defaultConfig = {
 };
 export const defaultConfigUsage = {
   "HMAC": ["sign", "verify"],
-  "EDSA": ["sign", "verify"],
+  "ECDSA": ["sign", "verify"],
   "ECDH": ["deriveBits", "deriveKey"],
   "AES-CBC": ["encrypt", "decrypt"],
   "AES-CTR": ["encrypt", "decrypt"],

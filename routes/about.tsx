@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Key Gen</title>
+        <title>About Key Gen</title>
       </Head>
       <Header></Header>
       

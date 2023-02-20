@@ -1,6 +1,8 @@
 import { JSX } from "preact";
 import { useState } from "preact/hooks";
 import Button from "./general/Button.tsx";
+import { Heading3 } from "./general/Headings.tsx";
+
 
 
 export function Sign({ configState }): JSX.Element {
@@ -20,7 +22,7 @@ export function Sign({ configState }): JSX.Element {
 
   return (
     <div>
-      <h1>Sign</h1>
+      <Heading3>Sign</Heading3>
       <Button onClick={sign} class="bg-purple-400">Sign</Button>
       <textarea placeholder="signature">{signature}</textarea>
     </div>

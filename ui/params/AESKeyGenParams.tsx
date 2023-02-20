@@ -1,5 +1,7 @@
 import { JSX } from "preact";
 
+import { Label } from "../components/general/Label.tsx";
+
 export function AESKeyGenParams({ state, setState }): JSX.Element {
   // lenght 128, 192, or 256.
   const lengthChange = (event: Event) => {
@@ -11,24 +13,14 @@ export function AESKeyGenParams({ state, setState }): JSX.Element {
 
   return (
     <fieldset>
-      <legend>{state.config.name} configuration</legend>
-      <label for="name">
-        Name
-        <input
-          name="name"
-          type="text"
-          value={state.config.name}
-          disabled
-          required />
-      </label>
-      <label for="length">
+      <Label for="length">
         Length:
-        <select name="length" onInput={lengthChange} value={state.length}>
+        <select class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="length" onInput={lengthChange} value={state.length}>
           <option value="128">128</option>
           <option value="192">192</option>
           <option value="256">256</option>
         </select>
-      </label>
+      </Label>
     </fieldset>
   );
 }

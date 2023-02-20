@@ -3,6 +3,9 @@ import { useEffect, useState } from "preact/hooks";
 
 import { AlgorithmComponentProps } from "../types/AlgorithmComponentProps.ts";
 import Checkbox from "../ui/components/general/Checkbox.tsx";
+
+import { Label } from "../ui/components/general/Label.tsx";
+import { Heading2, Heading3 } from "../ui/components/general/Headings.tsx";
 import {
   configControl,
   defaultConfig,
@@ -13,6 +16,7 @@ import {
 function AlgortihmConfig(
   { configState, setConfigState },
 ): JSX.Element {
+  
   const configComponent = configControl[configState.config.name]({
     name: configState.config.name,
     state: configState,
@@ -34,7 +38,7 @@ function AlgortihmConfig(
 
   return (
     <div>
-      <h1>Config</h1>
+      <Heading2>Config</Heading2>
       {configComponent}
       <fieldset>
         <legend>Usage</legend>
@@ -44,66 +48,50 @@ function AlgortihmConfig(
           value="sign"
           checked={configState.usage.includes("sign")}
           onChange={usageChange}
-        >
-          Sign
-        </Checkbox>
+        >Sign</Checkbox>
         <Checkbox
           name="usage"
           id="verify"
           value="verify"
           checked={configState.usage.includes("verify")}
-        >
-          Verify
-        </Checkbox>
+        >Verify</Checkbox>
         <Checkbox
           name="usage"
           id="encrypt"
           value="encrypt"
           checked={configState.usage.includes("encrypt")}
-        >
-          Encrypt
-        </Checkbox>
+        >Encrypt</Checkbox>
         <Checkbox
           type="checkbox"
           name="usage"
           id="decrypt"
           value="decrypt"
           checked={configState.usage.includes("decrypt")}
-        >
-          Decrypt
-        </Checkbox>
+        >Decrypt</Checkbox>
         <Checkbox
           name="usage"
           id="wrapKey"
           value="wrapKey"
           checked={configState.usage.includes("wrapKey")}
-        >
-          Wrap Key
-        </Checkbox>
+        >Wrap Key</Checkbox>
         <Checkbox
           name="usage"
           id="unwrapKey"
           value="unwrapKey"
           checked={configState.usage.includes("unwrapKey")}
-        >
-          Unwrap Key
-        </Checkbox>
+        >Unwrap Key</Checkbox>
         <Checkbox
           name="usage"
           id="deriveKey"
           value="deriveKey"
           checked={configState.usage.includes("deriveKey")}
-        >
-          Derive Key
-        </Checkbox>
+        >Derive Key</Checkbox>
         <Checkbox
           name="usage"
           id="deriveBits"
           value="deriveBits"
           checked={configState.usage.includes("deriveBits")}
-        >
-          Derive Bits
-        </Checkbox>
+        >Derive Bits</Checkbox>
       </fieldset>
       {configState.usage.map((usage) => {
         return usageControls[usage](configState);
@@ -130,16 +118,16 @@ function AlgorithmOutput({ configState }): JSX.Element {
   if (keyState instanceof CryptoKey) {
     return (
       <div>
-        <h1>Key output</h1>
+        <Heading3>Key output</Heading3>
         <textarea placeholder="public key">{JSON.stringify(keyState)}</textarea>
       </div>
     );
   } else if ("publicKey" in keyState && "privateKey" in keyState) {
     return (
       <div>
-        <h1>Public Key / Private Key output</h1>
-        <textarea placeholder="public key">{keyState.publicKey}</textarea>
-        <textarea placeholder="private key">{keyState.privateKey}</textarea>
+        <Heading3>Public Key / Private Key output</Heading3>
+        <textarea placeholder="public key">{JSON.stringify(keyState.publicKey)}</textarea>
+        <textarea placeholder="private key">{JSON.stringify(keyState.privateKey)}</textarea>
       </div>
     );
   } else {
@@ -148,7 +136,7 @@ function AlgorithmOutput({ configState }): JSX.Element {
 }
 
 export default function Algorithm(props: AlgorithmComponentProps) {
-  const [algorithm, setAlgorithm] = useState(props.algorithm || "HMAC");
+  const algorithm  = props.algorithm || "HMAC";
   const [configState, setConfigState] = useState({
     config: defaultConfig[algorithm],
     usage: defaultConfigUsage[algorithm],
@@ -156,7 +144,6 @@ export default function Algorithm(props: AlgorithmComponentProps) {
 
   const onChange = (event: Event) => {
     const newAlgorithm = event?.target?.value;
-    setAlgorithm(newAlgorithm);
     setConfigState(
       {
         config: defaultConfig[newAlgorithm],
@@ -166,9 +153,10 @@ export default function Algorithm(props: AlgorithmComponentProps) {
   };
 
   return (
-    <fieldset class="max-w-md">
-      <legend>Algorithm</legend>
-      <select value={configState.algorithm} onInput={onChange}>
+    <>
+      <Label for="algorithm" class="block mb-2 text-sm font-medium text-gray-900">Algorithm</Label>
+      <select class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        name="algorithm" value={configState.algorithm} onInput={onChange}>
         <option value="HMAC">HMAC</option>
         <option value="ECDSA">ECDSA</option>
         <option value="ECDH">ECDH</option>
@@ -185,6 +173,6 @@ export default function Algorithm(props: AlgorithmComponentProps) {
         setConfigState={setConfigState}
       />
       <AlgorithmOutput configState={configState} />
-    </fieldset>
+    </>
   );
 }
