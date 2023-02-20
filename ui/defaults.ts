@@ -8,7 +8,7 @@ import {
   UnwrapKey,
   Verify,
   WrapKey
-} from "../ui/components/index.tsx";
+} from "../ui/components/generator/index.tsx";
 import {
   AESKeyGenParams,
   EcKeyGenParams,
@@ -74,6 +74,18 @@ export const defaultConfigUsage = {
   "RSASSA-PKCS1-v1_5": ["sign", "verify"],
   "RSA-PSS": ["sign", "verify"],
   "RSA-OAEP": ["encrypt", "decrypt"],
+};
+export const exportTypes = {
+  "HMAC": ["raw"],
+  "ECDSA": ["raw", "pkcs8", "spki"],
+  "ECDH": ["raw", "pkcs8", "spki"],
+  "AES-CBC": ["raw"],
+  "AES-CTR": ["raw"],
+  "AES-GCM": ["raw"],
+  "AES-KW": ["raw"],
+  "RSASSA-PKCS1-v1_5": ["raw", "pkcs8", "spki"],
+  "RSA-PSS": ["raw", "pkcs8", "spki"],
+  "RSA-OAEP": ["raw", "pkcs8", "spki"],
 };
 export const usageControls = {
   "sign": Sign,

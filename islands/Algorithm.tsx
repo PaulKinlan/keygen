@@ -13,6 +13,8 @@ import {
   usageControls,
 } from "../ui/defaults.ts";
 
+import { CryptoKey } from "../ui/components/key/index.ts";
+
 function AlgortihmConfig(
   { configState, setConfigState },
 ): JSX.Element {
@@ -22,7 +24,6 @@ function AlgortihmConfig(
     setState: setConfigState,
   });
 
-  console.log(defaultConfigUsage)
   const deafultUsage = [...defaultConfigUsage[configState.config.name]];
 
   const usageChange = (event) => {
@@ -45,7 +46,6 @@ function AlgortihmConfig(
       <Heading3>Usage</Heading3>
       <fieldset>
         {deafultUsage.map((usage) => {
-          console.log(usage)
           return (
             <Checkbox
               name="usage"
@@ -65,7 +65,7 @@ function AlgortihmConfig(
 }
 
 function AlgorithmOutput({ configState }): JSX.Element {
-  const [keyState, setKeyState] = useState(configState.usage);
+  const [keyState, setKeyState] = useState();
 
   useEffect(() => {
     window.crypto.subtle.generateKey(
@@ -73,31 +73,31 @@ function AlgorithmOutput({ configState }): JSX.Element {
       true,
       configState.usage, // options
     )
-      .then((key) => {
-        console.log("key", key);
-        setKeyState(key);
-      });
+    .then((key) => {
+      console.log("key", key);
+      setKeyState(key);
+      return key;
+    })
   }, [configState]);
 
-  if (keyState instanceof CryptoKey) {
-    return (
-      <div>
-        <Heading3>Key output</Heading3>
-        <textarea placeholder="public key">{JSON.stringify(keyState)}</textarea>
-      </div>
-    );
-  } else if ("publicKey" in keyState && "privateKey" in keyState) {
+  console.log("keyState", keyState, keyState instanceof CryptoKey)
+
+  
+  if (keyState != null && "publicKey" in keyState && "privateKey" in keyState) {
     return (
       <div>
         <Heading3>Public Key / Private Key output</Heading3>
-        <textarea placeholder="public key">
-          {JSON.stringify(keyState.publicKey)}
-        </textarea>
-        <textarea placeholder="private key">
-          {JSON.stringify(keyState.privateKey)}
-        </textarea>
+        <CryptoKey keyState={keyState.publicKey} />
+        <CryptoKey keyState={keyState.privateKey} />
       </div>
     );
+  } else if (keyState != null ) {
+    console.log(keyState)
+    return (
+     <div>
+       <CryptoKey keyState={keyState} smeg="head" />
+     </div>
+    )
   } else {
     return <div>Not a key</div>;
   }

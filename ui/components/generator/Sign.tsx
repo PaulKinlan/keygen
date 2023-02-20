@@ -1,9 +1,7 @@
 import { JSX } from "preact";
 import { useState } from "preact/hooks";
-import Button from "./general/Button.tsx";
-import { Heading3 } from "./general/Headings.tsx";
-
-
+import Button from "../general/Button.tsx";
+import { Heading3 } from "../general/Headings.tsx";
 
 export function Sign({ configState }): JSX.Element {
   const [signature, setSignature] = useState("");
