@@ -10,9 +10,9 @@ export default function Home() {
         <title>Key Gen</title>
       </Head>
       <Header></Header>
-      <div class="grid h-screen w-screen place-content-center">
-        <Hero></Hero>
-        <Algorithm algorithm="HMAC" />
+      
+      <div class="mx-8 px-8">
+        <Hero class="grid"></Hero>
       </div>
     </>
   );

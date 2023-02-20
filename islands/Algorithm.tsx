@@ -2,7 +2,13 @@ import { JSX } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import { AlgorithmComponentProps } from "../types/AlgorithmComponentProps.ts";
-import { configControl, usageControls, defaultConfig, defaultConfigUsage } from "../ui/defaults.ts";
+import Checkbox from "../ui/components/general/Checkbox.tsx";
+import {
+  configControl,
+  defaultConfig,
+  defaultConfigUsage,
+  usageControls,
+} from "../ui/defaults.ts";
 
 function AlgortihmConfig(
   { configState, setConfigState },
@@ -32,71 +38,72 @@ function AlgortihmConfig(
       {configComponent}
       <fieldset>
         <legend>Usage</legend>
-        <input
-          type="checkbox"
+        <Checkbox
           name="usage"
           id="sign"
           value="sign"
           checked={configState.usage.includes("sign")}
           onChange={usageChange}
-        />
-        <label for="sign">Sign</label>
-        <input
-          type="checkbox"
+        >
+          Sign
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="verify"
           value="verify"
           checked={configState.usage.includes("verify")}
-        />
-        <label for="verify">Verify</label>
-        <input
-          type="checkbox"
+        >
+          Verify
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="encrypt"
           value="encrypt"
           checked={configState.usage.includes("encrypt")}
-        />
-        <label for="encrypt">Encrypt</label>
-        <input
+        >
+          Encrypt
+        </Checkbox>
+        <Checkbox
           type="checkbox"
           name="usage"
           id="decrypt"
           value="decrypt"
           checked={configState.usage.includes("decrypt")}
-        />
-        <label for="decrypt">Decrypt</label>
-        <input
-          type="checkbox"
+        >
+          Decrypt
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="wrapKey"
           value="wrapKey"
           checked={configState.usage.includes("wrapKey")}
-        />
-        <label for="wrapKey">Wrap Key</label>
-        <input
-          type="checkbox"
+        >
+          Wrap Key
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="unwrapKey"
           value="unwrapKey"
           checked={configState.usage.includes("unwrapKey")}
-        />
-        <label for="unwrapKey">Unwrap Key</label>
-        <input
-          type="checkbox"
+        >
+          Unwrap Key
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="deriveKey"
           value="deriveKey"
           checked={configState.usage.includes("deriveKey")}
-        />
-        <label for="deriveKey">Derive Key</label>
-        <input
-          type="checkbox"
+        >
+          Derive Key
+        </Checkbox>
+        <Checkbox
           name="usage"
           id="deriveBits"
           value="deriveBits"
           checked={configState.usage.includes("deriveBits")}
-        />
-        <label for="deriveBits">Derive Bits</label>
+        >
+          Derive Bits
+        </Checkbox>
       </fieldset>
       {configState.usage.map((usage) => {
         return usageControls[usage](configState);
@@ -106,7 +113,6 @@ function AlgortihmConfig(
 }
 
 function AlgorithmOutput({ configState }): JSX.Element {
-  console.log("configState", configState);
   const [keyState, setKeyState] = useState(configState.usage);
 
   useEffect(() => {
@@ -129,7 +135,6 @@ function AlgorithmOutput({ configState }): JSX.Element {
       </div>
     );
   } else if ("publicKey" in keyState && "privateKey" in keyState) {
-    console.log("keyState", keyState);
     return (
       <div>
         <h1>Public Key / Private Key output</h1>
