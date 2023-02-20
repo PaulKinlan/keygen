@@ -278,8 +278,8 @@ function RsaHashedKeyGenParams({ state, setState }): JSX.Element {
 function AlgortihmConfig(
   { configState, setConfigState },
 ): JSX.Element {
-  const configComponent = configControl[configstate.config.name]({
-    name: configstate.config.name,
+  const configComponent = configControl[configState.config.name]({
+    name: configState.config.name,
     state: configState,
     setState: setConfigState,
   });
@@ -308,7 +308,7 @@ function AlgortihmConfig(
           name="usage"
           id="sign"
           value="sign"
-          checked={usageState.includes("sign")}
+          checked={configState.usage.includes("sign")}
           onChange={usageChange}
         />
         <label for="sign">Sign</label>
@@ -317,7 +317,7 @@ function AlgortihmConfig(
           name="usage"
           id="verify"
           value="verify"
-          checked={usageState.includes("verify")}
+          checked={configState.usage.includes("verify")}
         />
         <label for="verify">Verify</label>
         <input
@@ -325,7 +325,7 @@ function AlgortihmConfig(
           name="usage"
           id="encrypt"
           value="encrypt"
-          checked={usageState.includes("encrypt")}
+          checked={configState.usage.includes("encrypt")}
         />
         <label for="encrypt">Encrypt</label>
         <input
@@ -333,7 +333,7 @@ function AlgortihmConfig(
           name="usage"
           id="decrypt"
           value="decrypt"
-          checked={usageState.includes("decrypt")}
+          checked={configState.usage.includes("decrypt")}
         />
         <label for="decrypt">Decrypt</label>
         <input
@@ -341,7 +341,7 @@ function AlgortihmConfig(
           name="usage"
           id="wrapKey"
           value="wrapKey"
-          checked={usageState.includes("wrapKey")}
+          checked={configState.usage.includes("wrapKey")}
         />
         <label for="wrapKey">Wrap Key</label>
         <input
@@ -349,7 +349,7 @@ function AlgortihmConfig(
           name="usage"
           id="unwrapKey"
           value="unwrapKey"
-          checked={usageState.includes("unwrapKey")}
+          checked={configState.usage.includes("unwrapKey")}
         />
         <label for="unwrapKey">Unwrap Key</label>
         <input
@@ -357,7 +357,7 @@ function AlgortihmConfig(
           name="usage"
           id="deriveKey"
           value="deriveKey"
-          checked={usageState.includes("deriveKey")}
+          checked={configState.usage.includes("deriveKey")}
         />
         <label for="deriveKey">Derive Key</label>
         <input
@@ -365,7 +365,7 @@ function AlgortihmConfig(
           name="usage"
           id="deriveBits"
           value="deriveBits"
-          checked={usageState.includes("deriveBits")}
+          checked={configState.usage.includes("deriveBits")}
         />
         <label for="deriveBits">Derive Bits</label>
       </fieldset>
