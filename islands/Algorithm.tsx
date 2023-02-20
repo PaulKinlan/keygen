@@ -16,12 +16,14 @@ import {
 function AlgortihmConfig(
   { configState, setConfigState },
 ): JSX.Element {
-  
   const configComponent = configControl[configState.config.name]({
     name: configState.config.name,
     state: configState,
     setState: setConfigState,
   });
+
+  console.log(defaultConfigUsage)
+  const deafultUsage = [...defaultConfigUsage[configState.config.name]];
 
   const usageChange = (event) => {
     const usage = configState.usage;
@@ -40,58 +42,20 @@ function AlgortihmConfig(
     <div>
       <Heading2>Config</Heading2>
       {configComponent}
+      <Heading3>Usage</Heading3>
       <fieldset>
-        <legend>Usage</legend>
-        <Checkbox
-          name="usage"
-          id="sign"
-          value="sign"
-          checked={configState.usage.includes("sign")}
-          onChange={usageChange}
-        >Sign</Checkbox>
-        <Checkbox
-          name="usage"
-          id="verify"
-          value="verify"
-          checked={configState.usage.includes("verify")}
-        >Verify</Checkbox>
-        <Checkbox
-          name="usage"
-          id="encrypt"
-          value="encrypt"
-          checked={configState.usage.includes("encrypt")}
-        >Encrypt</Checkbox>
-        <Checkbox
-          type="checkbox"
-          name="usage"
-          id="decrypt"
-          value="decrypt"
-          checked={configState.usage.includes("decrypt")}
-        >Decrypt</Checkbox>
-        <Checkbox
-          name="usage"
-          id="wrapKey"
-          value="wrapKey"
-          checked={configState.usage.includes("wrapKey")}
-        >Wrap Key</Checkbox>
-        <Checkbox
-          name="usage"
-          id="unwrapKey"
-          value="unwrapKey"
-          checked={configState.usage.includes("unwrapKey")}
-        >Unwrap Key</Checkbox>
-        <Checkbox
-          name="usage"
-          id="deriveKey"
-          value="deriveKey"
-          checked={configState.usage.includes("deriveKey")}
-        >Derive Key</Checkbox>
-        <Checkbox
-          name="usage"
-          id="deriveBits"
-          value="deriveBits"
-          checked={configState.usage.includes("deriveBits")}
-        >Derive Bits</Checkbox>
+        {deafultUsage.map((usage) => {
+          console.log(usage)
+          return (
+            <Checkbox
+              name="usage"
+              id={usage}
+              value={usage}
+              checked={configState.usage.includes(usage)}
+              onChange={usageChange}
+            >{usage}</Checkbox>
+          );
+        })}
       </fieldset>
       {configState.usage.map((usage) => {
         return usageControls[usage](configState);
@@ -126,8 +90,12 @@ function AlgorithmOutput({ configState }): JSX.Element {
     return (
       <div>
         <Heading3>Public Key / Private Key output</Heading3>
-        <textarea placeholder="public key">{JSON.stringify(keyState.publicKey)}</textarea>
-        <textarea placeholder="private key">{JSON.stringify(keyState.privateKey)}</textarea>
+        <textarea placeholder="public key">
+          {JSON.stringify(keyState.publicKey)}
+        </textarea>
+        <textarea placeholder="private key">
+          {JSON.stringify(keyState.privateKey)}
+        </textarea>
       </div>
     );
   } else {
@@ -136,10 +104,10 @@ function AlgorithmOutput({ configState }): JSX.Element {
 }
 
 export default function Algorithm(props: AlgorithmComponentProps) {
-  const algorithm  = props.algorithm || "HMAC";
+  const algorithm = props.algorithm || "HMAC";
   const [configState, setConfigState] = useState({
-    config: defaultConfig[algorithm],
-    usage: defaultConfigUsage[algorithm],
+    config: {...defaultConfig[algorithm]},
+    usage: [...defaultConfigUsage[algorithm]],
   });
 
   const onChange = (event: Event) => {
@@ -154,9 +122,18 @@ export default function Algorithm(props: AlgorithmComponentProps) {
 
   return (
     <>
-      <Label for="algorithm" class="block mb-2 text-sm font-medium text-gray-900">Algorithm</Label>
-      <select class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        name="algorithm" value={configState.algorithm} onInput={onChange}>
+      <Label
+        for="algorithm"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Algorithm
+      </Label>
+      <select
+        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        name="algorithm"
+        value={configState.algorithm}
+        onInput={onChange}
+      >
         <option value="HMAC">HMAC</option>
         <option value="ECDSA">ECDSA</option>
         <option value="ECDH">ECDH</option>
