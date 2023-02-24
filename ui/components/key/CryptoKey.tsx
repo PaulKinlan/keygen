@@ -15,7 +15,7 @@ function encodeToString(buffer: Uint8Array): string {
 
 function exportKey(binaryData: Uint8Array, label: string): string {
   if (label == 'secret') {
-    return encodeToString(binaryData);
+    return encodeToString(encode(binaryData));
   }
 
   return convertBinaryToPem(binaryData, label);
