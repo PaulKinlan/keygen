@@ -63,17 +63,18 @@ export const defaultConfig = {
     publicExponent: new Uint8Array([1, 0, 1]),
   },
 };
+// Source: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto#:~:text=The%20table%20below%20summarizes%20which%20algorithms%20are%20suitable%20for%20which%20cryptographic%20operations%3A
 export const defaultConfigUsage = {
   "HMAC": ["sign", "verify"],
   "ECDSA": ["sign", "verify"],
   "ECDH": ["deriveBits", "deriveKey"],
-  "AES-CBC": ["encrypt", "decrypt"],
-  "AES-CTR": ["encrypt", "decrypt"],
-  "AES-GCM": ["encrypt", "decrypt"],
+  "AES-CBC": ["encrypt", "decrypt", "wrapKey", "unwrapKey"],
+  "AES-CTR": ["encrypt", "decrypt", "wrapKey", "unwrapKey"],
+  "AES-GCM": ["encrypt", "decrypt", "wrapKey", "unwrapKey"],
   "AES-KW": ["wrapKey", "unwrapKey"],
   "RSASSA-PKCS1-v1_5": ["sign", "verify"],
   "RSA-PSS": ["sign", "verify"],
-  "RSA-OAEP": ["encrypt", "decrypt"],
+  "RSA-OAEP": ["encrypt", "decrypt", "wrapKey", "unwrapKey"],
 };
 export const exportTypes = {
   "HMAC": ["raw"],
@@ -83,9 +84,9 @@ export const exportTypes = {
   "AES-CTR": ["raw"],
   "AES-GCM": ["raw"],
   "AES-KW": ["raw"],
-  "RSASSA-PKCS1-v1_5": ["raw", "pkcs8", "spki"],
-  "RSA-PSS": ["raw", "pkcs8", "spki"],
-  "RSA-OAEP": ["raw", "pkcs8", "spki"],
+  "RSASSA-PKCS1-v1_5": { public: ["spki"], private: ["pkcs8"] },
+  "RSA-PSS": { public: ["spki"], private: ["pkcs8"] },
+  "RSA-OAEP": { public: ["spki"], private: ["pkcs8"] },
 };
 export const usageControls = {
   "sign": Sign,

@@ -1,107 +1,15 @@
-import { JSX } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 
 import { AlgorithmComponentProps } from "../types/AlgorithmComponentProps.ts";
-import Checkbox from "../ui/components/general/Checkbox.tsx";
 
 import { Label } from "../ui/components/general/Label.tsx";
-import { Heading2, Heading3 } from "../ui/components/general/Headings.tsx";
 import {
-  configControl,
   defaultConfig,
   defaultConfigUsage,
-  usageControls,
 } from "../ui/defaults.ts";
 
-import { CryptoKey } from "../ui/components/key/index.ts";
-
-function AlgortihmConfig(
-  { configState, setConfigState },
-): JSX.Element {
-  const configComponent = configControl[configState.config.name]({
-    name: configState.config.name,
-    state: configState,
-    setState: setConfigState,
-  });
-
-  const deafultUsage = [...defaultConfigUsage[configState.config.name]];
-
-  const usageChange = (event) => {
-    const usage = configState.usage;
-    if (event.target.checked) {
-      usage.push(event.target.value);
-    } else {
-      usage.splice(usage.indexOf(event.target.value), 1);
-    }
-
-    setConfigState({
-      ...configState,
-    });
-  };
-
-  return (
-    <div>
-      <Heading2>Config</Heading2>
-      {configComponent}
-      <Heading3>Usage</Heading3>
-      <fieldset>
-        {deafultUsage.map((usage) => {
-          return (
-            <Checkbox
-              name="usage"
-              id={usage}
-              value={usage}
-              checked={configState.usage.includes(usage)}
-              onChange={usageChange}
-            >{usage}</Checkbox>
-          );
-        })}
-      </fieldset>
-      {configState.usage.map((usage) => {
-        return usageControls[usage](configState);
-      })}
-    </div>
-  );
-}
-
-function AlgorithmOutput({ configState }): JSX.Element {
-  const [keyState, setKeyState] = useState();
-
-  useEffect(() => {
-    window.crypto.subtle.generateKey(
-      configState.config,
-      true,
-      configState.usage, // options
-    )
-    .then((key) => {
-      console.log("key", key);
-      setKeyState(key);
-      return key;
-    })
-  }, [configState]);
-
-  console.log("keyState", keyState, keyState instanceof CryptoKey)
-
-  
-  if (keyState != null && "publicKey" in keyState && "privateKey" in keyState) {
-    return (
-      <div>
-        <Heading3>Public Key / Private Key output</Heading3>
-        <CryptoKey keyState={keyState.publicKey} />
-        <CryptoKey keyState={keyState.privateKey} />
-      </div>
-    );
-  } else if (keyState != null ) {
-    console.log(keyState)
-    return (
-     <div>
-       <CryptoKey keyState={keyState} smeg="head" />
-     </div>
-    )
-  } else {
-    return <div>Not a key</div>;
-  }
-}
+import AlgorithmOutput from "../ui/components/AlgorithmOutput.tsx";
+import AlgortihmConfig from "../ui/components/AlgortihmConfig.tsx";
 
 export default function Algorithm(props: AlgorithmComponentProps) {
   const algorithm = props.algorithm || "HMAC";
