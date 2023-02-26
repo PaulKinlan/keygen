@@ -1,6 +1,6 @@
-import { encode } from "https://deno.land/std@0.177.0/encoding/hex.ts";
+import { encode, decode } from "https://deno.land/std@0.177.0/encoding/hex.ts";
 
-function encodeToString(buffer: Uint8Array): string {
+export function encodeToString(buffer: Uint8Array): string {
   return new TextDecoder().decode(buffer);
 }
 
@@ -33,3 +33,5 @@ export function exportKey(binaryData: Uint8Array, label: string): string {
 
   return convertBinaryToPem(binaryData, label);
 }
+
+export { encode, decode };
