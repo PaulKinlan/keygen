@@ -4,7 +4,6 @@ import { Heading2 } from "./general/Headings.tsx";
 import {
   configControl
 } from "../defaults.ts";
-import AlgorithmUsage from "./AlgorithmUsage.tsx";
 
 export default function AlgortihmConfig(
   { configState, setConfigState }): JSX.Element {
@@ -18,8 +17,6 @@ export default function AlgortihmConfig(
     <div>
       <Heading2>Config</Heading2>
       {configComponent}
-  
-      <AlgorithmUsage configState={configState} setConfigState={setConfigState}></AlgorithmUsage>
     </div>
   );
 }

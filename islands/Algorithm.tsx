@@ -10,6 +10,7 @@ import {
 
 import AlgorithmOutput from "../ui/components/AlgorithmOutput.tsx";
 import AlgortihmConfig from "../ui/components/AlgortihmConfig.tsx";
+import AlgorithmUsage from "../ui/components/AlgorithmUsage.tsx";
 
 export default function Algorithm(props: AlgorithmComponentProps) {
   const algorithm = props.algorithm || "HMAC";

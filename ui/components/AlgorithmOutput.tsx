@@ -1,13 +1,13 @@
 import { JSX } from "preact";
 import { useEffect, useState } from "preact/hooks";
+import AlgorithmUsage from "./AlgorithmUsage.tsx";
 import { Heading3 } from "./general/Headings.tsx";
 import { CryptoKey } from "./key/index.ts";
 
-export default function AlgorithmOutput({ configState }): JSX.Element {
+export default function AlgorithmOutput({ configState, setConfigState }): JSX.Element {
   const [keyState, setKeyState] = useState();
-
-  console.log(configState.config.name);
-
+  const [exportedKeyState, setExportedKeyState] = useState("");
+ 
   useEffect(() => {
     window.crypto.subtle.generateKey(
       configState.config,
@@ -28,7 +28,7 @@ export default function AlgorithmOutput({ configState }): JSX.Element {
         {keyState.publicKey.extractable
           ? (
             <div>
-              <CryptoKey keyState={keyState.publicKey} />
+              <CryptoKey keyState={keyState.publicKey} exportedKeyState={exportedKeyState} setExportedKeyState={setExportedKeyState} />
             </div>
           )
           : <div>PublicKey Not Extractable</div>}
@@ -36,17 +36,17 @@ export default function AlgorithmOutput({ configState }): JSX.Element {
         {keyState.privateKey.extractable
           ? (
             <div>
-              <CryptoKey keyState={keyState.privateKey} />
+              <CryptoKey keyState={keyState.privateKey} exportedKeyState={exportedKeyState} setExportedKeyState={setExportedKeyState} />
             </div>
           )
           : <div>PrivateKey Not Extractable</div>}
       </div>
     );
   } else if (keyState != null) {
-    console.log(keyState);
     return (
       <div>
-        <CryptoKey keyState={keyState} />
+        <CryptoKey keyState={keyState} exportedKeyState={exportedKeyState} setExportedKeyState={setExportedKeyState} />
+        <AlgorithmUsage configState={configState} setConfigState={setConfigState} keyState={keyState} exportedKeyState={exportedKeyState}/>
       </div>
     );
   } else {

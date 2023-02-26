@@ -5,7 +5,7 @@ import Checkbox from "./general/Checkbox.tsx";
 import { Heading3 } from "./general/Headings.tsx";
 
 export default function AlgorithmUsage(
-  { configState, setConfigState },
+  { configState, setConfigState, keyState, exportedKeyState },
 ): JSX.Element {
   const defaultUsage = [...defaultConfigUsage[configState.config.name]];
 
@@ -41,7 +41,7 @@ export default function AlgorithmUsage(
         })}
       </fieldset>
       {configState.usage.map((usage) => {
-        return usageControls[usage](configState);
+        return usageControls[usage]({configState, keyState, exportedKeyState});
       })}
     </div>
   );
